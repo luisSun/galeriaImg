@@ -7,23 +7,20 @@
                 <a>Posts</a>
                 <p>Outras coisas</p>
             </div>
-            <h2>Recebe Cards</h2>
             <div class="container-body">
-                <% for (let i = 0; i < result.length; i++) { %>
-                    <div class="card">
-                        <a href="#">
-                            <img class="img-thumbnail" src="<%= result[i].path %>">
-                        </a>
-                    </div>
-                    <!-- FIM Adicionar o EJS de iteração-->
-                <% } %>
+                <h2>Ola seja bem vindo <%= username %></h2>
+                <ul>
+                    <li>Ver ultimos postados <a href="/home">Post</a></li>
+                    <li>Alterar Perfil <a href="#">alterar</a></li>
+                    <li>Fazer Upload: <a href="/upload">upload</a></li>
+                    <li>LogOut <a href="/logout">Sair</a></li>
+                </ul>
             </div>
             <div class="footer">
                 recebe o footer, paginação
             </div>
         </div>
     </section>
-    
 </main>
 <footer>
     <p>Footer</p>

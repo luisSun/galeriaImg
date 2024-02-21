@@ -1,0 +1,36 @@
+<%- include('partials/head.ejs') %>
+<main>
+    <%- include('partials/aside.ejs') %>
+    <section>
+        <div class="container">
+            <div class="container-head">Esse seria o Header
+                <a>Posts</a>
+                <p>Outras coisas</p>
+            </div>
+            <div class="container-body">
+                <h2>Ola seja bem vindo</h2>
+
+                <div class="upload">
+                    <h1>Upload de Imagem</h1>
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                      <label for="title">Título:</label><br>
+                      <input type="text" id="title" name="title"><br><br>
+                      <label for="description">Descrição:</label><br>
+                      <textarea id="description" name="description"></textarea><br><br>
+                      <label for="image">Escolha uma imagem:</label><br>
+                      <input type="file" id="image" name="image"><br><br>
+                      <input type="submit" value="Enviar">
+                    </form>
+                </div>
+
+            </div>
+            <div class="footer">
+                recebe o footer, paginação
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>Footer</p>
+</footer>
+<%- include('partials/endBody.ejs') %>

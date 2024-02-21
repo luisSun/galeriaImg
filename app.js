@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 
-//const middleware = require('./src/middleware');
+//const middleware = require('./src/middleware/middleware.js');
 
 const loginRouter = require('./src/routes/loginroute.js');
 const homeRouter = require('./src/routes/homeroute.js');
+const userRouter = require('./src/routes/userRoute.js');
+const upRouter = require('./src/routes/upload.js');
 
 const PORT = process.env.PORT || 8082;
 
@@ -20,6 +22,7 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/imgs'));
 app.use(express.urlencoded({ extended: false }));
 
 //Exige autentificação
@@ -35,8 +38,9 @@ function requireAuth(req, res, next) {
 }
 
 app.use('/', loginRouter);
-app.use('/', requireAuth, homeRouter);
-
+app.use('/', homeRouter);
+app.use('/', upRouter);
+app.use('/', requireAuth, userRouter);
 
 app.get('/logout', (req, res) => {
   req.session.destroy();

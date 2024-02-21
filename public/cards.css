@@ -1,0 +1,23 @@
+.container-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Alterado para flex-start */
+}
+
+.card {
+    width: calc(25% - 10px); /* Define a largura dos cards com uma margem entre eles */
+    margin-right: 20px; /* Adiciona margem direita para espaçamento entre os cards */
+    margin-bottom: 20px; /* Mantém a margem inferior para espaçamento entre as linhas */
+    box-sizing: border-box; /* Garante que a largura inclua padding e borda */
+}
+
+.card:last-child {
+    margin-right: 0; /* Remove a margem direita do último card */
+}
+
+.img-thumbnail {
+    width: 100%;
+    height: auto;
+    border: 1px solid;
+    border-radius: 5px;
+}

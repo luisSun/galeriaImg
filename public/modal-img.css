@@ -1,0 +1,20 @@
+.card {
+    position: relative;
+    /* Outros estilos do card */
+}
+
+.rectangle {
+    position: absolute;
+    width: 450px;
+    height: 100px;
+    background-color: pink;
+    display: none;
+    top: 100%; /* Posiciona abaixo do card */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Corrige a centralização */
+    z-index: 1;
+}
+
+.image-container {
+    position: relative;
+}

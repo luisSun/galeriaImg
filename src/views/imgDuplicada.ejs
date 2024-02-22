@@ -10,22 +10,8 @@
             </div>
             <h2>Recebe Cards</h2>
             <div class="container-body">
-                <% for (let i = 0; i < result.length; i++) { %>
-                    <div class="card" data-card-id="<%= result[i].id %>" onmouseover="showRectangle(this)" onmouseout="hideRectangle(this)">
-                        <div class="image-container">
-                            <a href="/img/<%= result[i].id %>"><img class="img-thumbnail" src="<%= result[i].path %>"></a>
-                            <div class="rectangle">
-                                <div class="rectangle-header">
-                                    <h5>Autor Post:</h5> 
-                                </div>
-                                <div class="retangle-body">
-                                    <h5>Tags:</h5>
-                                    <p><%= result[i].tags %></p>
-                                </div>
-                            </div> <!-- Retângulo rosa -->
-                        </div>
-                    </div>
-                <% } %>
+                <img src="/<%= existingImagePath %>" alt="Imagem Existente">
+                <img src="/<%= imagePath %>" alt="Nova Imagem">
             </div>
             <div class="footer">
                 recebe o footer, paginação

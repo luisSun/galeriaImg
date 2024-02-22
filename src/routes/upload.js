@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }).array('images', 10); // 'images' é o nome do campo de upload e 10 é o número máximo de arquivos
 
 // Função para carregar uma imagem e obter seus dados de pixel
 async function loadImageData(path) {
@@ -36,24 +36,39 @@ router.get('/upload', (req, res) => {
     res.render('upload', { error });
 });
 
-router.post('/upload', upload.single('image'), async (req, res) => {
-    const { title, description } = req.body;
-    const imagePath = req.file.filename;
 
-    // Verifica se a imagem já existe no banco de dados
-    const [rows] = await connection.query('SELECT * FROM images');
-    const exists = await checkIfImageExists(imagePath, rows);
+router.post('/upload', (req, res) => {
+    upload(req, res, async (err) => {
+        if (err instanceof multer.MulterError) {
+            // Um erro ocorreu durante o upload
+            return res.status(500).json({ message: 'Ocorreu um erro durante o upload dos arquivos.' });
+        } else if (err) {
+            // Outro tipo de erro ocorreu
+            return res.status(500).json({ message: 'Ocorreu um erro inesperado.' });
+        }
 
-    if (exists) {
-        // Se a imagem já existe, exibe um popup pedindo uma imagem diferente
-        //return res.redirect(`<script> function abrirPopup() { window.open('/upload'); } </script>`);
-        return res.send('<script>alert("Imagem ja upload"); window.location.href = "/upload";</script>');        
-    }
+        const { title, description } = req.body;
 
-    // Insere informações sobre a imagem no banco de dados
-    await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, imagePath]);
-    res.send('<script>alert("Imagem Enviada com sucesso!"); window.location.href = "/upload";</script>');
+        const images = req.files.map(file => file.filename);
+
+        for (const imagePath of images) {
+            // Verifica se a imagem já existe no banco de dados
+            const [rows] = await connection.query('SELECT * FROM images');
+            const exists = await checkIfImageExists(imagePath, rows);
+
+            if (exists) {
+                // Se a imagem já existe, exibe um popup pedindo uma imagem diferente
+                return res.send('<script>alert("Imagem já enviada"); window.location.href = "/upload";</script>');
+            }
+
+            // Insere informações sobre a imagem no banco de dados
+            await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, imagePath]);
+        }
+
+        res.send('<script>alert("Imagens enviadas com sucesso!"); window.location.href = "/upload";</script>');
+    });
 });
+
 
 // Função para verificar se uma imagem já existe no banco de dados
 async function checkIfImageExists(imagePath, database) {

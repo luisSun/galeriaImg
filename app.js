@@ -8,6 +8,8 @@ const loginRouter = require('./src/routes/loginroute.js');
 const homeRouter = require('./src/routes/homeroute.js');
 const userRouter = require('./src/routes/userRoute.js');
 const upRouter = require('./src/routes/upload.js');
+const imgRouter = require('./src/routes/img-main.js');
+
 
 const PORT = process.env.PORT || 8082;
 
@@ -40,6 +42,7 @@ function requireAuth(req, res, next) {
 app.use('/', loginRouter);
 app.use('/', homeRouter);
 app.use('/', upRouter);
+app.use('/', imgRouter);
 app.use('/', requireAuth, userRouter);
 
 app.get('/logout', (req, res) => {

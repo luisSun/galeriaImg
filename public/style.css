@@ -29,3 +29,9 @@ footer {
     padding: 10px;
     text-align: center;
 }
+
+.img-main img {
+    width: 50px; /* 10% de 500px */
+    height: 50px; /* 10% de 500px */
+    /* outras propriedades de estilo para a imagem */
+}

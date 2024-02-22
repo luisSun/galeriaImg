@@ -1,0 +1,39 @@
+<%- include('partials/head.ejs') %>
+<main>
+    <%- include('partials/aside.ejs') %>
+    <section>
+        <div class="container">
+            <div class="container-head">Esse seria o Header
+                <a>Posts</a>
+                <p>Outras coisas</p>
+                <button onclick="changeImageSize(60)">60%</button>
+                <button onclick="changeImageSize(80)">80%</button>
+                <button onclick="changeImageSize(100)">100%</button>
+            </div>
+            <h2>Recebe Cards</h2>
+            <div class="container-body">
+
+                <% for (let i = 0; i < result.length; i++) { %>
+                    <img class="img-main" src="/<%= result[i].path %>">
+                    <!-- FIM Adicionar o EJS de iteração-->
+                <% } %>
+            </div>
+            <div class="footer">
+                recebe o footer, paginação
+            </div>
+        </div>
+    </section>
+    
+</main>
+<footer>
+    <p>Footer</p>
+</footer>
+<%- include('partials/endBody.ejs') %>
+
+<script>
+    function changeImageSize(size) {
+        var img = document.querySelector('.img-main');
+        img.style.width = size + '%';
+        img.style.height = size + '%';
+    }
+</script>

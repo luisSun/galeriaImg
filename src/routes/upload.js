@@ -47,13 +47,11 @@ router.post('/upload', upload.single('image'), async (req, res) => {
     if (exists) {
         // Se a imagem já existe, exibe um popup pedindo uma imagem diferente
         //return res.redirect(`<script> function abrirPopup() { window.open('/upload'); } </script>`);
-        return res.send('<script>alert("Imagem ja upload"); window.location.href = "/upload";</script>');
-        
+        return res.send('<script>alert("Imagem ja upload"); window.location.href = "/upload";</script>');        
     }
 
     // Insere informações sobre a imagem no banco de dados
     await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, imagePath]);
-
     res.send('<script>alert("Imagem Enviada com sucesso!"); window.location.href = "/upload";</script>');
 });
 

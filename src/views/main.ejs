@@ -1,4 +1,5 @@
 <%- include('partials/head.ejs') %>
+
 <main>
     <%- include('partials/aside.ejs') %>
     <section>
@@ -10,12 +11,12 @@
             <h2>Recebe Cards</h2>
             <div class="container-body">
                 <% for (let i = 0; i < result.length; i++) { %>
-                    <div class="card">
-                        <a href="#">
-                            <img class="img-thumbnail" src="<%= result[i].path %>">
-                        </a>
+                    <div class="card" data-card-id="<%= result[i].id %>" onmouseover="showRectangle(this)" onmouseout="hideRectangle(this)">
+                        <div class="image-container">
+                            <a href="/img/<%= result[i].id %>"><img class="img-thumbnail" src="<%= result[i].path %>"></a>
+                            <div class="rectangle"></div> <!-- Retângulo rosa -->
+                        </div>
                     </div>
-                    <!-- FIM Adicionar o EJS de iteração-->
                 <% } %>
             </div>
             <div class="footer">
@@ -23,9 +24,42 @@
             </div>
         </div>
     </section>
-    
 </main>
+
 <footer>
     <p>Footer</p>
 </footer>
+
 <%- include('partials/endBody.ejs') %>
+
+<script>
+// Objeto para armazenar os timeouts
+var timeouts = {};
+
+function showRectangle(card) {
+    var rectangle = card.querySelector('.rectangle');
+    var cardId = card.getAttribute('data-card-id');
+
+    // Limpa o timeout anterior se existir
+    if (timeouts[cardId]) {
+        clearTimeout(timeouts[cardId]);
+    }
+
+    // Define um timeout para exibir o retângulo
+    timeouts[cardId] = setTimeout(function() {
+        rectangle.style.display = 'block';
+    }, 1000);
+}
+
+function hideRectangle(card) {
+    var rectangle = card.querySelector('.rectangle');
+    var cardId = card.getAttribute('data-card-id');
+
+    // Limpa o timeout anterior se existir
+    if (timeouts[cardId]) {
+        clearTimeout(timeouts[cardId]);
+    }
+
+    rectangle.style.display = 'none'; // Oculta o retângulo
+}
+</script>

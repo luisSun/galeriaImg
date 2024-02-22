@@ -9,15 +9,25 @@
                 <button onclick="changeImageSize(60)">60%</button>
                 <button onclick="changeImageSize(80)">80%</button>
                 <button onclick="changeImageSize(100)">100%</button>
+                <button onclick="changeImageSize('original')">Tamanho original</button>
             </div>
             <h2>Recebe Cards</h2>
             <div class="container-body">
 
                 <% for (let i = 0; i < result.length; i++) { %>
-                    <img class="img-main" src="/<%= result[i].path %>">
+                    <img class="img-main" src="/<%= result[i].path %>" style="width: 60%; height: 60%;">
                     <!-- FIM Adicionar o EJS de iteração-->
-                <% } %>
+                
             </div>
+            <div class="container-tags">
+                <p>Texto placeholder</p>
+            </div>
+            <div class="container-footer">
+                <a href="<%= result[i].id - 1 %>"><</a>
+                <h4>Texto placeholder</h4>
+                <a href="<%= result[i].id + 1 %>">></a>
+            </div>
+            <% } %>
             <div class="footer">
                 recebe o footer, paginação
             </div>
@@ -31,9 +41,20 @@
 <%- include('partials/endBody.ejs') %>
 
 <script>
-    function changeImageSize(size) {
+function changeImageSize(size) {
         var img = document.querySelector('.img-main');
-        img.style.width = size + '%';
-        img.style.height = size + '%';
+        if (size === 'original') {
+            // Define a largura e altura originais da imagem
+            img.style.width = 'auto';
+            img.style.height = 'auto';
+        } else {
+            img.style.width = size + '%';
+            img.style.height = size + '%';
+        }
     }
+
+    // Ajusta o tamanho da imagem para 80% ao carregar a página
+    window.onload = function() {
+        changeImageSize(80);
+    };
 </script>

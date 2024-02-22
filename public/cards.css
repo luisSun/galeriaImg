@@ -2,7 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Alterado para flex-start */
-    padding: 10px;
+    padding-left: 30px;
+    background-color: blue;
 }
 
 .card {
@@ -24,8 +25,16 @@
     border-radius: 5px;
 }
 
-.img-main{
-    width: 60%;
-    height: 60%;
+.img-main {
+    width: 95%;
+    height: 95%;
 }
 
+.container-tags{
+    width: 95%;
+    background-color: rgb(216, 216, 216);
+}
+
+.container-footer{
+    background-color: rgb(216, 216, 216);
+}

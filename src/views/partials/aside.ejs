@@ -1,12 +1,21 @@
 <aside>
-<h2>Aside</h2>
-<input type="text"/>
-<p>Barra de pesquisa</p>
-<h4>Tags</h4>
-<ul>
-    <li>tags</li>
-    <li>tags</li>
-    <li>tags</li>
-    <li>tags</li>
-</ul>
-</aside>
+    <h2>Aside</h2>
+    <input type="text"/>
+    <p>Barra de pesquisa</p>
+    <h4>Tags</h4>
+    <ul>
+      <% if (result && result.length) { %>
+        <% for (let i = 0; i < result.length; i++) { %>
+          <% if (result[i].tags) { %>
+            <% const tags = result[i].tags.split(';'); %>
+            <% for (let j = 0; j < tags.length; j++) { %>
+              <li><%= tags[j] %></li>
+            <% } %>
+          <% } %>
+        <% } %>
+      <% } else { %>
+        <li>Nenhuma tag encontrada</li>
+      <% } %>
+    </ul>
+  </aside>
+  

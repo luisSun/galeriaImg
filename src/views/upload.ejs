@@ -7,23 +7,17 @@
                 <a>Posts</a>
                 <p>Outras coisas</p>
             </div>
-            <div class="container-body">
-                <h2>Ola seja bem vindo</h2>
-
-                <div class="upload">
-                    <h1>Upload de Imagem</h1>
-                    <form action="/upload" method="POST" enctype="multipart/form-data">
-                      <label for="title">Título:</label><br>
-                      <input type="text" id="title" name="title"><br><br>
-                      <label for="description">Descrição:</label><br>
-                      <textarea id="description" name="description"></textarea><br><br>
-                      <label for="image">Escolha uma imagem:</label><br>
-                      <input type="file" id="image" name="image"><br><br>
-                      <input type="submit" value="Enviar">
-                    </form>
+                <div class="container-body">
+                    <h2>Ola seja bem vindo</h2>
+                    <div class="upload" id="uploadArea">
+                        <h1>Upload de Imagens</h1>
+                        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                            <div id="dropArea" class="drop-area">Arraste e solte os arquivos aqui</div>
+                            <input type="file" id="images" name="images" multiple style="display: none;">
+                            <input type="submit" value="Enviar" style="display: none;">
+                        </form>
+                    </div>
                 </div>
-
-            </div>
             <div class="footer">
                 recebe o footer, paginação
             </div>
@@ -34,3 +28,39 @@
     <p>Footer</p>
 </footer>
 <%- include('partials/endBody.ejs') %>
+
+<script>
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('images');
+const submitButton = document.querySelector('input[type="submit"]');
+
+dropArea.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    dropArea.classList.add('dragover');
+});
+
+dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('dragover');
+});
+
+dropArea.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropArea.classList.remove('dragover');
+
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+        fileInput.files = files;
+        submitButton.style.display = 'block';
+    }
+});
+
+dropArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+        submitButton.style.display = 'block';
+    }
+});
+</script>

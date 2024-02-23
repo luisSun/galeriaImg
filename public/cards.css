@@ -35,6 +35,23 @@
     background-color: rgb(216, 216, 216);
 }
 
-.container-footer{
-    background-color: rgb(216, 216, 216);
+.container-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 95%;
+    background-color: aqua;
+    padding: 15px;
+}
+
+.container-footer a, .container-footer h4 {
+    margin: 0;
+}
+
+.container-footer a:first-child {
+    margin-right: auto;
+}
+
+.container-footer a:last-child {
+    margin-left: auto;
 }

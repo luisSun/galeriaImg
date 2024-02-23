@@ -13,7 +13,7 @@
                 <% for (let i = 0; i < result.length; i++) { %>
                     <div class="card" data-card-id="<%= result[i].id %>" onmouseover="showRectangle(this)" onmouseout="hideRectangle(this)">
                         <div class="image-container">
-                            <a href="/img/<%= result[i].id %>"><img class="img-thumbnail" src="<%= result[i].path %>"></a>
+                            <a href="/img/<%= result[i].id %>"><img class="img-thumbnail" src="/<%= result[i].path %>"></a>
                             <div class="rectangle">
                                 <div class="rectangle-header">
                                     <h5>Autor Post:</h5> 

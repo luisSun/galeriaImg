@@ -1,7 +1,7 @@
 // middleware.js
 const express = require('express');
 
-const imgMiddleware = express.static(__dirname + '/imgs', {
+const imgMiddleware = express.static(__dirname + '..' + '/imgs', {
     setHeaders: (res, path) => {
         if (path.endsWith('.jpg') || path.endsWith('.jpeg')) {
             res.setHeader('Content-Type', 'image/jpeg');

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 
-//const middleware = require('./src/middleware/middleware.js');
+const middleware = require('./src/middleware/middleware.js');
 
 const loginRouter = require('./src/routes/loginroute.js');
 const homeRouter = require('./src/routes/homeroute.js');
@@ -26,6 +26,8 @@ app.use(session({
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/imgs'));
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/im/', middleware.imgMiddleware);
 
 //Exige autentificação
 function requireAuth(req, res, next) {

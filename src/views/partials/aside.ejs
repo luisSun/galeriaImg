@@ -1,21 +1,65 @@
 <aside>
-    <h2>Aside</h2>
-    <input type="text"/>
-    <p>Barra de pesquisa</p>
-    <h4>Tags</h4>
-    <ul>
-      <% if (result && result.length) { %>
-        <% for (let i = 0; i < result.length; i++) { %>
+  <h2>Aside</h2>
+  <input type="text"/>
+  <p>Barra de pesquisa</p>
+  <h4>Tags</h4>
+  <% let series = {}; %>
+  <% let characters = {}; %>
+  <% let authors = {}; %>
+  <% let misc = {}; %>
+  <% if (result && result.length) { %>
+      <% for (let i = 0; i < result.length; i++) { %>
           <% if (result[i].tags) { %>
-            <% const tags = result[i].tags.split(';'); %>
-            <% for (let j = 0; j < tags.length; j++) { %>
-              <li><%= tags[j] %></li>
-            <% } %>
+              <% const tags = result[i].tags.split(';'); %>
+              <% for (let j = 0; j < tags.length; j++) { %>
+                  <% const tag = tags[j].trim(); %>
+                  <% if (tag.startsWith('series:')) { %>
+                      <% series[tag] = (series[tag] || 0) + 1; %>
+                  <% } else if (tag.startsWith('char:')) { %>
+                      <% characters[tag] = (characters[tag] || 0) + 1; %>
+                  <% } else if (tag.startsWith('author:')) { %>
+                      <% authors[tag] = (authors[tag] || 0) + 1; %>
+                  <% } else if (tag.startsWith('misc:')) { %>
+                      <% const miscTags = tag.replace('misc:', '').split(','); %>
+                      <% for (let k = 0; k < miscTags.length; k++) { %>
+                          <% const miscTag = miscTags[k].trim(); %>
+                          <% misc[miscTag] = (misc[miscTag] || 0) + 1; %>
+                      <% } %>
+                  <% } %>
+              <% } %>
           <% } %>
-        <% } %>
-      <% } else { %>
-        <li>Nenhuma tag encontrada</li>
       <% } %>
-    </ul>
-  </aside>
-  
+  <% } %>
+  <ul>
+      <h4>Series</h4>
+      <% for (let tag in series) { %>
+          <li><a href="/tags/<%= tag.replace('series:', '') %>"><%= tag.replace('series:', '') %> (<%= series[tag] %>)</a></li>
+      <% } %>
+      <% if (Object.keys(series).length === 0) { %>
+      <% } %>
+  </ul>
+  <ul>
+      <h4>Characters</h4>
+      <% for (let tag in characters) { %>
+          <li><a href="/tags/<%= tag.replace('char:', '') %>"><%= tag.replace('char:', '') %> (<%= characters[tag] %>)</a></li>
+      <% } %>
+      <% if (Object.keys(characters).length === 0) { %>
+      <% } %>
+  </ul>
+  <ul>
+      <h4>Authors</h4>
+      <% for (let tag in authors) { %>
+          <li><%= tag.replace('author:', '') %> (<%= authors[tag] %>)</li>
+      <% } %>
+      <% if (Object.keys(authors).length === 0) { %>
+      <% } %>
+  </ul>
+  <ul>
+      <h4>Misc</h4>
+      <% for (let tag in misc) { %>
+          <li><a href="/tags/<%= tag.replace('misc:', '') %>"><%= tag.replace('misc:', '') %> (<%= misc[tag] %>)</a></li>
+      <% } %>
+      <% if (Object.keys(misc).length === 0) { %>
+      <% } %>
+  </ul>
+</aside>

@@ -59,14 +59,13 @@ router.post('/upload', async (req, res) => {
             // Constrói o novo caminho da imagem
             const newPath = path.join(destinationPath, randomName + ext);
             const newName = randomName+ext
-            console.log(newPath)
             // Copia a imagem para o novo caminho
             fs.copyFileSync(image.path, newPath);
-            const pythonScriptPath = 'C:\\Users\\Fernando\\Desktop\\python\\python3.py';
+            const pythonScriptPath = 'C:\\Users\\Fernando\\Desktop\\python\\olamundo2.py';
 
             // Executa o script Python com o nome aleatório como parâmetro
             const { exec } = require('child_process');
-            exec(`python "${pythonScriptPath}" ${newPath}`, async (error, stdout, stderr) => {
+            exec(`python "${pythonScriptPath}" ${newName}`, async (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Erro ao executar o comando: ${error.message}`);
                     return;

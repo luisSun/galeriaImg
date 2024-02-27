@@ -54,3 +54,18 @@
 .container-footer a:last-child {
     margin-left: auto;
 }
+
+.dup,
+.original {
+    flex: 1; /* Distribui o espaço disponível igualmente entre os cards */
+    margin: 10px; /* Adiciona margem entre os cards */
+}
+
+.card-dupl {
+    width: 60%;
+    height: 60%;
+}
+
+.image-container h3{
+    color: white;
+}

@@ -1,0 +1,11 @@
+//UPLOAD
+//TODO [ ] arrumar multi Upload
+//TODO [ ] limitar o tamanho mb de imgs
+//TODO [ ] converter todas para png ao salvar
+//TODO [ ] apenas fazer upload de imgs [.png, .jpg, .jpeg, etc]
+//TODO [ ] strip meta-dados
+//TODO [ ] verificar arquivos maliciosos na img
+//TODO [ ] arrumar infos NO DB, adicionar usuario Upload, sfw/nsfw, ativo/desativ/lixeira
+//TODO [ ] campo de tags editaveis
+
+//TODO [ ] ARRUMAR TAGS DA ASIDE

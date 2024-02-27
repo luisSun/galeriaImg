@@ -25,6 +25,7 @@ app.use(session({
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/imgs'));
+app.use(express.static(__dirname + '/imgs/temp'));
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/im/', middleware.imgMiddleware);
@@ -43,8 +44,8 @@ function requireAuth(req, res, next) {
 
 app.use('/', loginRouter);
 app.use('/', homeRouter);
-app.use('/', upRouter);
 app.use('/', imgRouter);
+app.use('/', requireAuth, upRouter);
 app.use('/', requireAuth, userRouter);
 
 app.get('/logout', (req, res) => {

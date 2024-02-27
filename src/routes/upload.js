@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs'); // Use fs.promises para carregar a imagem
-const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
 
 const connection = require('../db/dbimg');
 
+//MULTER
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'imgs/'); // Pasta de destino
+        cb(null, 'imgs/temp'); // Pasta de destino
     },
     filename: function (req, file, cb) {
         const date = new Date();
@@ -25,7 +25,16 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage }).array('images', 10); // 'images' é o nome do campo de upload e 10 é o número máximo de arquivos
+const upload = multer({ storage: storage }).array('images', 10); 
+// 'images' é o nome do campo de upload e 10 é o número máximo de arquivos
+//TODO - arrumar multi Upload
+//TODO - limitar o tamanho mb de imgs
+//TODO - converter todas para png ao salvar
+//TODO - apenas fazer upload de imgs [.png, .jpg, .jpeg, etc]
+//TODO - strip meta-dados
+//TODO - verificar arquivos maliciosos na img
+//TODO - arrumar infos NO DB, adicionar usuario Upload, sfw/nsfw, ativo/desativ/lixeira
+//TODO - campo de tags editaveis
 
 router.get('/upload', (req, res) => {
     const error = req.query.error;
@@ -42,31 +51,44 @@ router.post('/upload', async (req, res) => {
             return res.status(500).json({ message: 'Ocorreu um erro inesperado.' });
         }
 
+        //TO:DO
+        //Mudar isso par ao final caso a IMG for unica abrir rota para confirmar Upload
+        //passando nome e tags
         const { title, description } = req.body;
+        //FIM TO:DO
 
         const images = req.files.map(file => file);
         const filenames = images.map(image => image.filename);
-        console.log(filenames);
-        // Caminho para a pasta de destino
-        const destinationPath = 'C:\\Users\\Fernando\\Desktop\\python';
+        //console.log(filenames);
 
-        // Abre o programa olamundo.py para cada imagem enviada
+        // Caminho para a pasta de destino, 
+        //primeiro vai para destinationPathTemp e se der certo vai para 
+        //destinationPathImg onde guarda e insert no DB com ela
+        const destinationPathTemp = path.join(__dirname, '..', '..', 'imgs', 'temp');
+        const destinationPathImg = path.join(__dirname, '..', '..', 'imgs');
+
         for (const image of images) {
-            // Gera um nome aleatório para a imagem
-            const randomName = uuidv4();
-            // Obtém a extensão da imagem original
-            const ext = path.extname(image.originalname);
-            // Constrói o novo caminho da imagem
-            const newPath = path.join(destinationPath, randomName + ext);
-            const newName = randomName+ext
-            console.log(newPath)
-            // Copia a imagem para o novo caminho
-            fs.copyFileSync(image.path, newPath);
-            const pythonScriptPath = 'C:\\Users\\Fernando\\Desktop\\python\\python3.py';
+            // Constrói o novo caminho das imagems
+            const newPath = path.join(destinationPathImg, filenames[0]);
+            const imgTemp = path.join(destinationPathTemp, filenames[0]);
 
-            // Executa o script Python com o nome aleatório como parâmetro
+            //Caminho do arquivo .PY
+            //.PY checa se existe um img que esta sendo feito Upload: args
+            //guarda em temp primeiro atraves do MUTER e verifica
+            //se ja existe uma img igual ou parecida em /img
+            //const pythonScriptPath = 'C:\\Users\\Fernando\\Desktop\\python\\pythonNova.py';
+            const pythonScriptPath2 = path.join(__dirname, '..', '..', 'python', 'pythonNovaLimpa.py');
+            
+
+            // Executa o script Python passando o argumento imgTemp
+            // Se imgTemp ja existir na psta /img ele vai para a rota /igual
+            /*TODO
+            arrumar rota : igual
+            arrumar rota : parecida
+            arrumar rota : original para mandar tags
+            */
             const { exec } = require('child_process');
-            exec(`python "${pythonScriptPath}" ${newPath}`, async (error, stdout, stderr) => {
+            exec(`python "${pythonScriptPath2}" "${imgTemp}"`, async (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Erro ao executar o comando: ${error.message}`);
                     return;
@@ -75,15 +97,35 @@ router.post('/upload', async (req, res) => {
                     console.error(`Erro de execução: ${stderr}`);
                     return;
                 }
-                console.log(`Saída do comando: ${stdout}`);
+                //Log do resultado do .PY img;jpg igual / parecida
+                console.log(stdout.trim())
 
-                // Insere informações sobre a imagem no banco de dados
-                await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, filenames]);
+                //Se saida do .PY for === a igual
+                if (stdout.includes('igual')) {
+                    const imgDuplicada = filenames[0]
+                    const imgigual = stdout.trim().split(' ')[0];
+                    console.log(`Imagem ja existe ${imgigual}`)
+                    console.log(`Imagem Nova duplicada ${imgDuplicada}`)
+                    // Redireciona para a rota /igual
+                    res.status(200).render('igual', { imgDuplicada: imgDuplicada , imgigual : imgigual });
+                } else {
+                    fs.copyFileSync(image.path, newPath);
+                    // Insere informações sobre a imagem no banco de dados
+                    await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, filenames]);
+                    // Continua para a rota principal
+                    res.send('<script>alert("Imagens enviadas com sucesso!"); window.location.href = "/upload";</script>');
+                }
+
             });
         }
-
-        res.send('<script>alert("Imagens enviadas com sucesso!"); window.location.href = "/upload";</script>');
+        
     });
 });
+
+router.get('/igual', (req, res) => {
+    const error = req.query.error;
+    res.render('igual', { error });
+});
+
 
 module.exports = router;

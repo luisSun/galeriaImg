@@ -49,7 +49,8 @@
   <ul>
       <h4>Authors</h4>
       <% for (let tag in authors) { %>
-          <li><%= tag.replace('author:', '') %> (<%= authors[tag] %>)</li>
+        <li><a href="/tags/<%= tag.replace('author:', '') %>"><%= tag.replace('author:', '') %> (<%= authors[tag] %>)</a></li>
+          
       <% } %>
       <% if (Object.keys(authors).length === 0) { %>
       <% } %>

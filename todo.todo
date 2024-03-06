@@ -1,11 +1,19 @@
 //UPLOAD
 //TODO [ ] arrumar multi Upload
-//TODO [ ] limitar o tamanho mb de imgs
 //TODO [ ] converter todas para png ao salvar
-//TODO [ ] apenas fazer upload de imgs [.png, .jpg, .jpeg, etc]
-//TODO [ ] strip meta-dados
+
 //TODO [ ] verificar arquivos maliciosos na img
+        // [X] Validação de Tipo de Arquivo
+        // [X] Limite de Tamanho de Arquivo:
+        // [ ] Strip de Metadados
+        // [ ] Validação de Integridade
+
 //TODO [ ] arrumar infos NO DB, adicionar usuario Upload, sfw/nsfw, ativo/desativ/lixeira
 //TODO [ ] campo de tags editaveis
+
+//TODO [X] Criar paginação na main
+        // [ ] mostrar 3 paginas e a ultima 1 2 3 .. 6 7 8 ... 12
+        // [ ] Destacar pagina atual
+
 
 //TODO [ ] ARRUMAR TAGS DA ASIDE

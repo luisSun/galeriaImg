@@ -25,16 +25,9 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage }).array('images', 10); 
-// 'images' é o nome do campo de upload e 10 é o número máximo de arquivos
-//TODO - arrumar multi Upload
-//TODO - limitar o tamanho mb de imgs
-//TODO - converter todas para png ao salvar
-//TODO - apenas fazer upload de imgs [.png, .jpg, .jpeg, etc]
-//TODO - strip meta-dados
-//TODO - verificar arquivos maliciosos na img
-//TODO - arrumar infos NO DB, adicionar usuario Upload, sfw/nsfw, ativo/desativ/lixeira
-//TODO - campo de tags editaveis
+const upload = multer({
+    storage: storage
+}).array('images', 10); 
 
 router.get('/upload', (req, res) => {
     const error = req.query.error;
@@ -51,13 +44,35 @@ router.post('/upload', async (req, res) => {
             return res.status(500).json({ message: 'Ocorreu um erro inesperado.' });
         }
 
+        // Verifica se há arquivos enviados na requisição
+        const images = req.files;
+        if (!images || images.length === 0) {
+            return res.status(400).json({ message: 'Nenhuma imagem enviada.' });
+        }
+
+        // Verifica se alguma imagem é maior que 7MB
+        const oversizedImage = images.find(image => image.size > 7000000); // 7MB em bytes
+        if (oversizedImage) {
+            // Remove o arquivo grande da pasta temporária
+            fs.unlinkSync(oversizedImage.path);
+            res.send('<script>alert("Imagens muito grande senpai, imagens deve ter menos que 7mb!"); window.location.href = "/upload";</script>');
+        }
+
+        // Verifica se todas as imagens são do tipo válido
+        const isValidImages = images.every(image => ['jpg', 'jpeg', 'png', 'gif', 'webm', 'web'].some(ext => image.originalname.toLowerCase().endsWith(ext)));
+        if (!isValidImages) {
+            // Remove os arquivos inválidos da pasta temporária
+            images.forEach(image => fs.unlinkSync(image.path));
+            res.send('<script>alert("Apenas arquivos do Tipo : JPG, JPEG, PNG, GIF sao Permitidos!"); window.location.href = "/upload";</script>');
+        }
+
+
         //TO:DO
-        //Mudar isso par ao final caso a IMG for unica abrir rota para confirmar Upload
+        //Mudar isso para o final caso a IMG for única, abrir rota para confirmar Upload
         //passando nome e tags
         const { title, description } = req.body;
         //FIM TO:DO
 
-        const images = req.files.map(file => file);
         const filenames = images.map(image => image.filename);
         //console.log(filenames);
 

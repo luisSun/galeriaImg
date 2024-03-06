@@ -45,7 +45,7 @@ function requireAuth(req, res, next) {
 app.use('/', loginRouter);
 app.use('/', homeRouter);
 app.use('/', imgRouter);
-app.use('/', requireAuth, upRouter);
+app.use('/', upRouter);
 app.use('/', requireAuth, userRouter);
 
 app.get('/logout', (req, res) => {

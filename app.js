@@ -46,7 +46,7 @@ app.use('/', loginRouter);
 app.use('/', homeRouter);
 app.use('/', imgRouter);
 app.use('/', upRouter);
-app.use('/', requireAuth, userRouter);
+//app.use('/', userRouter);
 
 app.get('/logout', (req, res) => {
   req.session.destroy();

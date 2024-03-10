@@ -51,3 +51,14 @@ footer {
     box-sizing: border-box;
     /* Adicione outras propriedades de estilo conforme necessário */
 }
+
+.tag-button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

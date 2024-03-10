@@ -14,24 +14,15 @@
             <h2>Recebe Cards</h2>
             <div class="container-body">
 
-            <% for (let i = 0; i < result.length; i++) { %>
+                <% for (let i = 0; i < result.length; i++) { %>
                     <img class="img-main" src="/<%= result[i].path %>" style="width: 60%; height: 60%;">
                     <!-- FIM Adicionar o EJS de iteração-->
             </div>
-            <div class="tags">
-                <h4>Adicionar Tags:</h4>
-                <form action="/update-tags/<%= result[0].id %>" method="post">
-                    <div class="tags">
-                        <h4>Adicionar Tags:</h4>
-                        <div class="container-tags" onclick="toggleTags(this)">
-                            <p class="tags-non-editable">TAGS: <%= result[0].tags %></p>
-                            <br>
-                            <textarea name="tags" class="tags-editable" style="display: none; width: 100%;" onclick="stopPropagation(event);"><%= result[0].tags %></textarea>
-                            <button class="save-button" style="display: none;" onclick="saveTags(this)" data-id="<%= result[0].id %>">Salvar</button>
-                        </div>
-                    </div>
-                    <input type="submit" style="display: none;"> <!-- Add a hidden submit button to submit the form -->
-                </form>
+
+            <div class="container-tags" onclick="toggleTags(this)">
+                <p class="tags-non-editable"><%= result[i].tags %></p>
+                <textarea class="tags-editable" style="display: none; width: 100%;" onclick="stopPropagation(event);"><%= result[i].tags %></textarea>
+                <button class="save-button" style="display: none;" onclick="saveTags(this)">Salvar</button>
             </div>
 
 
@@ -72,20 +63,13 @@
     }
     
     function saveTags(button) {
-    const form = button.parentElement; // Get the parent container
-    const id = button.getAttribute('data-id'); // Get the id from the button's data-id attribute
-    const textarea = form.querySelector('.tags-editable');
-    const p = form.querySelector('.tags-non-editable');
-    
-    p.textContent = textarea.value; // Update the paragraph's content with the textarea's value
-    textarea.style.display = 'none'; // Hide the textarea
-    p.style.display = 'block'; // Show the paragraph
-    
-    // Use 'id' to construct the correct action URL
-    form.action = `/update-tags/${id}`;
-    
-    // Submit the form
-    form.submit(); 
-}
+        const container = button.parentElement;
+        const p = container.querySelector('.tags-non-editable');
+        const textarea = container.querySelector('.tags-editable');
+        p.textContent = textarea.value; // Atualiza o conteúdo do parágrafo com o valor da caixa de texto
+        textarea.style.display = 'none'; // Esconde o textarea
+        p.style.display = 'block'; // Exibe o parágrafo
+        toggleTags(container); // Volta para a exibição do parágrafo
+    }
 </script>
 <%- include('partials/endBody.ejs') %>

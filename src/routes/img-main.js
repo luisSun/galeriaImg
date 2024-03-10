@@ -18,4 +18,19 @@ router.get('/img/:index', async (req, res) => {
 
 });
 
+router.post('/update-tags/:id', async (req, res) => {
+  const imageId = req.params.id;
+  const newTags = req.body.tags; // Assuming 'tags' is the key for the updated tags
+
+  try {
+      await connection.query('UPDATE images SET tags = ? WHERE id = ?', [newTags, imageId]);
+      const script = `<script>alert("Tags Alteradas"); window.location.href = "/img/${imageId}";</script>`;
+      res.status(200).send(script);
+  } catch (error) {
+      console.error('Failed to update tags:', error);
+      res.status(500).send('Failed to update tags');
+  }
+});
+
+
 module.exports = router;

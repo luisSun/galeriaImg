@@ -45,3 +45,9 @@ footer {
     font-size: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.tags-editable {
+    width: 100%;
+    box-sizing: border-box;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}

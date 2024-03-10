@@ -17,3 +17,10 @@
 
 
 //TODO [ ] ARRUMAR TAGS DA ASIDE
+//TODO [ ] Add Tags na img-main
+
+git init
+git checkout -b DD-MM-AAAA-V
+git add .
+git commit -m "Your commit message here"
+git push origin DD-MM-AAAA-V

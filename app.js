@@ -11,7 +11,7 @@ const upRouter = require('./src/routes/upload.js');
 const imgRouter = require('./src/routes/img-main.js');
 
 
-const PORT = process.env.PORT || 8082;
+const PORT = process.env.PORT || 8083;
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/src/views');

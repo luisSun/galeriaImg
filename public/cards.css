@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Alterado para flex-start */
-    padding-left: 5px;
+    padding-left: 10px;
     background-color: rgb(255, 255, 255);
 }
 
@@ -69,3 +69,10 @@
 .image-container h3{
     color: white;
 }
+
+@media (max-width: 768px) {
+    .card {
+      width: 100px; /* Define a largura fixa do card */
+      margin-right: 10px; /* Remove a margem direita para ocupar toda a largura disponível */
+    }
+  }

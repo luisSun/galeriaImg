@@ -1,0 +1,40 @@
+aside{
+    width: 200px; /* largura do seu aside */
+    word-wrap: break-word;
+}
+
+aside h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.aside-main ul {
+    list-style-type: disc; /* ou o estilo de marcador desejado */
+    padding-left: 10px; /* remove a identação do lado esquerdo */
+    margin-left: 3px;
+}
+.aside-main li {
+    margin-bottom: 6px;
+}
+.aside-main a{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    font-weight: 14 ;
+}
+
+.char-li a{
+    color:#c70303a6;
+}
+
+.serie-li a{
+    color:#0306c7a6;
+}
+
+.author-li a{
+    color:#c74103a6;
+}
+
+.misc-li a{
+    color:#7f03c7a6;
+}

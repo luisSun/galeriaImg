@@ -12,7 +12,7 @@ router.get(['/','/main','/home'], async (req, res) => {
     const totalPages = Math.ceil(totalItems / perPage); // Total de páginas
 
     const offset = (currentPage - 1) * perPage;
-    const [result] = await connection.query('SELECT * FROM images ORDER BY id DESC LIMIT ?, ?', [offset, perPage]);
+    const [result] = await connection.query('SELECT * FROM images where ativo = "A" ORDER BY id DESC LIMIT ?, ?', [offset, perPage]);
 
     res.status(200).render('main', { result: result, totalPages: totalPages, currentPage: currentPage });
   } catch (error) {

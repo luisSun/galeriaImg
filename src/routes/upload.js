@@ -120,7 +120,7 @@ router.post('/upload', async (req, res) => {
                     // Redireciona para a rota /igual
                     res.status(200).render('igual', { imgDuplicada: imgDuplicada , imgigual : imgigual });
                 } else {
-                    //fs.copyFileSync(image.path, newPath);
+                    fs.copyFileSync(image.path, newPath);
                     let url = '/enviado/' + encodeURIComponent(filenames);
                     res.redirect(url);
                     // Insere informações sobre a imagem no banco de dados
@@ -176,9 +176,9 @@ router.post('/rota-de-teste', async (req, res) => {
 
     // Inserir os dados na tabela images
     try {
-        await connection.query('INSERT INTO images (path, tipo, tags) VALUES (?, ?, ?)', [imgSrc, selectedValue, formattedTags]);
+        await connection.query('INSERT INTO images (path, tipo, tags, ativo) VALUES (?, ?, ?, ?)', [imgSrc, selectedValue, formattedTags, 'A']);
         console.log('Dados inseridos com sucesso na tabela images.');
-        res.json({ message: 'Dados recebidos e inseridos com sucesso!' });
+        res.send('<script>alert("Imagens enviadas com sucesso!"); window.location.href = "/";</script>');
     } catch (error) {
         console.error('Erro ao inserir dados na tabela images:', error);
         res.status(500).json({ message: 'Erro ao inserir dados na tabela images.' });

@@ -30,3 +30,35 @@ footer {
     text-align: center;
 }
 
+
+.pagination li {
+        color:#f4f4f4;
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        display: inline-block;
+        margin-right: 5px; /* Espaçamento entre os números */
+}
+
+.pagination a{
+    text-decoration: none;
+    color:#f4f4f4;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.tags-editable {
+    width: 100%;
+    box-sizing: border-box;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+.tag-button {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -14,13 +14,21 @@
             <h2>Recebe Cards</h2>
             <div class="container-body">
 
-                <% for (let i = 0; i < result.length; i++) { %>
+            <% for (let i = 0; i < result.length; i++) { %>
                     <img class="img-main" src="/<%= result[i].path %>" style="width: 60%; height: 60%;">
                     <!-- FIM Adicionar o EJS de iteração-->
             </div>
             <div class="container-tags">
-                <p>Texto placeholder</p>
-            </div>
+                <p class="tags-non-editable">TAGS: <%= result[0].tags %></p>
+                <br>
+                <button onclick="editTags(this)">Editar</button>
+                <form id="editForm" class="edit-form" action="/update-tags/<%= result[0].id %>" method="post" style="display: none;">
+                    <textarea name="tags" class="tags-editable" onclick="stopPropagation(event);" oninput="getTagSuggestions(this);" rows="4" cols="50"></textarea>
+                    <button class="save-button" onclick="saveTags(this)" data-id="<%= result[0].id %>">Salvar</button>
+                </form>
+            </div>            
+
+
             <div class="container-footer">
                 <a href="<%= result[i].id - 1 %>"><</a>
                 <h4>Texto placeholder</h4>
@@ -37,23 +45,24 @@
 <footer>
     <p>Footer</p>
 </footer>
-<%- include('partials/endBody.ejs') %>
 
 <script>
-function changeImageSize(size) {
-        var img = document.querySelector('.img-main');
-        if (size === 'original') {
-            // Define a largura e altura originais da imagem
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-        } else {
-            img.style.width = size + '%';
-            img.style.height = size + '%';
-        }
-    }
 
-    // Ajusta o tamanho da imagem para 80% ao carregar a página
-    window.onload = function() {
-        changeImageSize(80);
-    };
+function getTagSuggestions(textarea) {
+  const inputValue = textarea.value.trim();
+  fetch(`/tags/suggestions?input=${inputValue}`)
+    .then(response => response.json())
+    .then(data => {
+      // Atualiza a lista de sugestões com base na resposta
+      // (por exemplo, preencher uma lista de sugestões abaixo do textarea)
+    })
+    .catch(error => console.error('Erro ao obter sugestões de tags:', error));
+}
+
 </script>
+
+
+
+
+
+<%- include('partials/endBody.ejs') %>

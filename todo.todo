@@ -1,0 +1,36 @@
+//Fazer essa semana
+//TODO [ ] arrumar multi Upload
+//TODO [ ] - apos upload mandar para uma intermediaria antes de salvar
+        [ ] - add tags ao mandar
+        [ ] - atrelar a um usuario
+//TODO [ ] Admin Painel
+
+
+
+//Lista de afazeres
+//UPLOAD
+//TODO [ ] arrumar multi Upload
+//TODO [ ] converter todas para png ao salvar
+
+//TODO [ ] verificar arquivos maliciosos na img
+        // [X] Validação de Tipo de Arquivo
+        // [X] Limite de Tamanho de Arquivo:
+        // [ ] Strip de Metadados
+        // [ ] Validação de Integridade
+
+//TODO [ ] arrumar infos NO DB, adicionar usuario Upload, sfw/nsfw, ativo/desativ/lixeira
+//TODO [ ] campo de tags editaveis
+
+//TODO [X] Criar paginação na main
+        // [ ] mostrar 3 paginas e a ultima 1 2 3 .. 6 7 8 ... 12
+        // [ ] Destacar pagina atual
+
+//TODO [ ] ARRUMAR TAGS DA ASIDE
+//TODO [X] Add Tags na img-main
+
+git init
+git checkout -b DD-MM-AAAA-V
+git add .
+git commit -m "Your commit message here"
+git push origin DD-MM-AAAA-V
+

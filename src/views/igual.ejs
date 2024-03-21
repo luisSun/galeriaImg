@@ -1,0 +1,44 @@
+<%- include('partials/head.ejs') %>
+
+<main>
+    
+    <section>
+        <div class="container">
+            <div class="container-head">Esse seria o Header
+                <a>Posts</a>
+                <p>Outras coisas</p>
+            </div>
+            <h2>Recebe Cards</h2>
+
+            <div class="container-body">
+                <div class="dup">
+                    <div class="card-dupl" data-card-id="" onmouseover="showRectangle(this)" onmouseout="hideRectangle(this)">
+                        <div class="image-container">
+                            <h3>Imagem Duplicada</h3>
+                            <img class="img-thumbnail" src="/<%= imgDuplicada %>">
+                        </div>
+                    </div>
+                </div>
+                <div class="original">
+                    <div class="card-dupl" data-card-id="" onmouseover="showRectangle(this)" onmouseout="hideRectangle(this)">
+                        <div class="image-container">
+                            <h3>Imagem Original</h3>
+                            <a href="#"><img class="img-thumbnail" src="/<%= imgigual %>"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/home"><h4>Voltar Home</h3></a>
+            <a href="/uoload"><h4>Voltar Upload</h3></a>
+            <div class="footer">
+                recebe o footer, paginação
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Footer</p>
+</footer>
+
+<%- include('partials/endBody.ejs') %>

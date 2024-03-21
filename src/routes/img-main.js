@@ -35,11 +35,11 @@ router.post('/update-tags/:id', async (req, res) => {
 
     // Verificar e adicionar o prefixo correto para cada linha
     if (index === 0) {
-      formattedTags += filteredTags.map(tag => `series:${tag.charAt(0).toUpperCase() + tag.slice(1)}`).join('; ');
+      formattedTags += filteredTags.map(tag => `series:${tag.replace(/\b(\w)/g, (_, initial) => initial.toUpperCase()).replace(/\s+/g, '_')}`).join('; ');
     } else if (index === 1) {
-      formattedTags += `; ${filteredTags.map(tag => `char:${tag.charAt(0).toUpperCase() + tag.slice(1)}`).join('; ')}`;
+      formattedTags += `; ${filteredTags.map(tag => `char:${tag.replace(/\b(\w)/g, (_, initial) => initial.toUpperCase()).replace(/\s+/g, '_')}`).join('; ')}`;
     } else if (index === 2) {
-      formattedTags += `; misc:${filteredTags.map(tag => tag.charAt(0).toUpperCase() + tag.slice(1)).join(', ')}`;
+      formattedTags += `; misc:${filteredTags.map(tag => tag.replace(/\b(\w)/g, (_, initial) => initial.toUpperCase()).replace(/\s+/g, '_')).join(', ')}`;
     }
   });
 
@@ -52,24 +52,5 @@ router.post('/update-tags/:id', async (req, res) => {
     res.status(500).send('Failed to update tags');
   }
 });
-
-
-router.get('/get-tag-suggestions', async (req, res) => {
-  const tag = req.query.tag.toLowerCase().trim(); // Tag digitada pelo usuário
-  try {
-    // Consulta SQL para buscar sugestões de tags com base na tag digitada pelo usuário
-    const [rows] = await connection.query('SELECT DISTINCT tags FROM images WHERE tags LIKE ?', [`${tag}%`]);
-
-    // Extrai as sugestões de tags da resposta da consulta SQL
-    const suggestions = rows.map(row => row.tags);
-
-    res.json({ suggestions });
-  } catch (error) {
-    console.error('Erro ao buscar sugestões de tags:', error);
-    res.status(500).json({ error: 'Erro ao buscar sugestões de tags' });
-  }
-});
-
-
 
 module.exports = router;

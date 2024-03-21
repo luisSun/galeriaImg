@@ -1,0 +1,104 @@
+<%- include('partials/head.ejs') %>
+<main>
+        <section>
+            <div class="container" id="c2">
+                <form id="editForm" class="tag-textarea" action="/rota-de-teste" method="post" onsubmit="return validateForm()">
+                    <div class="container-head c2h">Esse seria o Header
+                        <a>Posts</a>
+                        <p>Outras coisas</p>
+                        <div class="selector-size" style="display: flex;">
+                            <div class="selct" onclick="changeImageSize2(60)">SMALL</div>
+                            <div class="selct" onclick="changeImageSize2(80)">MEDIUM</div>
+                            <div class="selct" onclick="changeImageSize2('original')">OG SIZE</div>
+                        </div>
+                    </div>
+                    <div class="c2c">
+                        <div class="c2img">
+
+                            <img class="imgMain" src="/<%= id %>" style="width: 60%; height: 60%;">
+                            <input type="hidden" id="imgSrc" name="imgSrc" value="<%= id %>" required>
+                        </div>
+                        <div class="c2t">
+                            <h4>Tramanho Original: </h4>
+                            <div class="selector" required>
+                                <div class="option" data-value="sfw" selected>SFW</div>
+                                <div class="option" data-value="nfw">NFW</div>
+                                <div class="option" data-value="picante">Picante</div>
+                            </div>
+                            <input type="hidden" id="selectedValue" name="selectedValue" required>
+                            <p class="tags-non-editable">TAGS: </p>
+                            <textarea name="tags" id="txttags" class="tags-editable" placeholder="//Linha1\n//Linha2\n//Linha3" onclick="stopPropagation(event);" oninput="getTagSuggestions(this);" rows="4" cols="50" required></textarea>
+                            <input type="hidden" id="tipo" name="tipo" required>
+                            <button type="submit" class="save-button">Salvar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+    </section>
+    
+</main>
+<footer>
+    <p>Footer</p>
+</footer>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const lines = [
+        "// Linha 1: Adicione as Series separadas por virgula",
+        "// Linha 2: Adicione personagens separadas por virgula ex: Misty (POK)",
+        "// Linha 3: Adicione personagens separadas por virgula ex: suspenders,orange hair"
+    ];
+
+    const placeholderText = lines.join('\n');
+    document.getElementById('txttags').setAttribute('placeholder', placeholderText);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const options = document.querySelectorAll('.option');
+
+    options.forEach(function(option) {
+        option.addEventListener('click', function() {
+            options.forEach(function(o) {
+                o.classList.remove('active');
+            });
+            this.classList.add('active');
+            document.getElementById('selectedValue').value = this.getAttribute('data-value');
+        });
+    });
+});
+
+function changeImageSize2(size) {
+    var img = document.querySelector('.imgMain'); // Corrigido para '.imgMain'
+    if (size === 'original') {
+        // Define a largura e altura originais da imagem
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+    } else {
+        img.style.width = size + '%';
+        img.style.height = size + '%';
+    }
+}
+
+// Ajusta o tamanho da imagem para 30% ao carregar a página
+window.onload = function() {
+    changeImageSize2(60);
+};
+
+function validateForm() {
+        const selectedValue = document.getElementById('selectedValue').value;
+        if (selectedValue === '') {
+            alert('Por favor, selecione uma opção.');
+            return false; // Impede o envio do formulário
+        }
+        return true; // Permite o envio do formulário
+    }
+
+</script>
+
+
+
+
+
+<%- include('partials/endBody.ejs') %>

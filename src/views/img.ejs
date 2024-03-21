@@ -26,8 +26,7 @@
                     <textarea name="tags" class="tags-editable" onclick="stopPropagation(event);" oninput="getTagSuggestions(this);" rows="4" cols="50"></textarea>
                     <button class="save-button" onclick="saveTags(this)" data-id="<%= result[0].id %>">Salvar</button>
                 </form>
-            </div>
-            
+            </div>            
 
 
             <div class="container-footer">
@@ -49,7 +48,16 @@
 
 <script>
 
-
+function getTagSuggestions(textarea) {
+  const inputValue = textarea.value.trim();
+  fetch(`/tags/suggestions?input=${inputValue}`)
+    .then(response => response.json())
+    .then(data => {
+      // Atualiza a lista de sugestões com base na resposta
+      // (por exemplo, preencher uma lista de sugestões abaixo do textarea)
+    })
+    .catch(error => console.error('Erro ao obter sugestões de tags:', error));
+}
 
 </script>
 

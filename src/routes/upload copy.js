@@ -120,10 +120,11 @@ router.post('/upload', async (req, res) => {
                     // Redireciona para a rota /igual
                     res.status(200).render('igual', { imgDuplicada: imgDuplicada , imgigual : imgigual });
                 } else {
-                    //fs.copyFileSync(image.path, newPath);
-                    let url = '/enviado/' + encodeURIComponent(filenames);
-                    res.redirect(url);
+                    fs.copyFileSync(image.path, newPath);
                     // Insere informações sobre a imagem no banco de dados
+                    await connection.query('INSERT INTO images (title, description, path) VALUES (?, ?, ?)', [title, description, filenames]);
+                    // Continua para a rota principal
+                    res.send('<script>alert("Imagens enviadas com sucesso!"); window.location.href = "/upload";</script>');
                 }
 
             });
@@ -131,15 +132,14 @@ router.post('/upload', async (req, res) => {
     });
 });
 
-
 router.get('/igual', (req, res) => {
     const error = req.query.error;
     res.render('igual', { error });
 });
 
-router.get('/enviado/:id', (req, res) => {
-    const id = req.params.id;
-    res.render('enviado', { id });
+router.get('/enviado/', (req, res) => {
+ 
+    res.render('enviado'); // Coloque o objeto entre chaves
 });
 
 
@@ -159,7 +159,8 @@ router.post('/rota-de-teste', async (req, res) => {
     // Processar cada linha
     lines.forEach((line, index) => {
         const tags = line.trim().split(',').map(tag => tag.trim());
-              // Remover elementos vazios
+      
+        // Remover elementos vazios
         const filteredTags = tags.filter(tag => tag !== '');
       
         // Verificar e adicionar o prefixo correto para cada linha
@@ -171,8 +172,6 @@ router.post('/rota-de-teste', async (req, res) => {
             formattedTags += `;misc:${filteredTags.map(tag => tag.replace(/\b(\w+)/g, (_, word) => word.charAt(0).toUpperCase() + word.slice(1)).replace(/\s+/g, '_')).join(',')}`;
         }
     });
-
-    //fs.copyFileSync(image.path, newPath);
 
     // Inserir os dados na tabela images
     try {

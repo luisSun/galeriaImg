@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+const bodyParser = require('body-parser');
+
+
 
 const middleware = require('./src/middleware/middleware.js');
 
@@ -22,6 +25,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { maxAge: 600000 }
 }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/imgs'));

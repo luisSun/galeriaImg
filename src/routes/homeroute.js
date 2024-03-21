@@ -5,7 +5,7 @@ const connection = require('../db/dbimg');
 
 router.get(['/','/main','/home'], async (req, res) => {
   try {
-    const perPage = 12; // Itens por página
+    const perPage = 20; // Itens por página
     const currentPage = req.query.page || 1; // Página atual, padrão é a primeira página
     const [count] = await connection.query('SELECT COUNT(*) AS total FROM images');
     const totalItems = count[0].total; // Total de itens na tabela
@@ -26,7 +26,7 @@ router.get('/pag/1', (req, res) => {
 });
 
 router.get('/pag/:page', async (req, res) => {
-  const perPage = 12; // Itens por página
+  const perPage = 20; // Itens por página
   const currentPage = req.params.page || 1; // Página atual, padrão é a primeira página
   const [count] = await connection.query('SELECT COUNT(*) AS total FROM images');
   const totalItems = count[0].total; // Total de itens na tabela
